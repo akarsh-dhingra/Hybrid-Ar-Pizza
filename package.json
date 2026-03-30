@@ -1,0 +1,13 @@
+{
+  "name": "hybrid-ar-pizza",
+  "private": true,
+  "workspaces": [
+    "client"
+  ],
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "preview": "npm --prefix client run preview",
+    "lint": "npm --prefix client run lint"
+  }
+}

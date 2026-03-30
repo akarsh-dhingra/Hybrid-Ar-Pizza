@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signature Pizza Menu QR</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", Arial, sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(241, 89, 31, 0.2), transparent 35%),
+          linear-gradient(180deg, #05070d, #0b1020 60%, #06080f);
+        color: #f8fafc;
+      }
+      .shell {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 20px 48px;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(280px, 420px) 1fr;
+        gap: 24px;
+        align-items: start;
+      }
+      .panel {
+        background: rgba(8, 12, 24, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        backdrop-filter: blur(18px);
+      }
+      .qr-card {
+        padding: 24px;
+      }
+      .eyebrow {
+        margin: 0;
+        color: #94a3b8;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-size: 12px;
+      }
+      h1 {
+        margin: 10px 0 12px;
+        font-size: clamp(32px, 4vw, 56px);
+        line-height: 0.95;
+      }
+      .lede {
+        color: #cbd5e1;
+        line-height: 1.6;
+      }
+      .qr-frame {
+        margin-top: 22px;
+        border-radius: 24px;
+        background: white;
+        padding: 18px;
+        display: inline-flex;
+      }
+      .qr-frame img {
+        width: min(100%, 320px);
+        height: auto;
+        display: block;
+      }
+      .payload {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: #0a1220;
+        color: #dbeafe;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        white-space: pre-wrap;
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        padding: 24px;
+      }
+      .stat {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 16px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 26px;
+        margin-top: 10px;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 28px 0 18px;
+      }
+      input {
+        width: min(100%, 320px);
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        padding: 12px 16px;
+        background: rgba(8, 12, 24, 0.82);
+        color: #f8fafc;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+      .card {
+        background: rgba(8, 12, 24, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        overflow: hidden;
+      }
+      .poster {
+        position: relative;
+        aspect-ratio: 4 / 5;
+        overflow: hidden;
+        background: linear-gradient(135deg, #fde68a, #fb7185);
+      }
+      .poster::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(255, 255, 255, 0.55), transparent 42%);
+      }
+      .pizza-base,
+      .pizza-sauce,
+      .pizza-cheese {
+        position: absolute;
+        left: 50%;
+        border-radius: 999px;
+        transform: translateX(-50%);
+      }
+      .pizza-base {
+        top: 14%;
+        width: 68%;
+        height: 56%;
+        background: #d7a26b;
+      }
+      .pizza-sauce {
+        top: 19%;
+        width: 57%;
+        height: 46%;
+        background: #b8402d;
+      }
+      .pizza-cheese {
+        top: 22%;
+        width: 51%;
+        height: 40%;
+        background: #f6d48f;
+      }
+      .poster-label {
+        position: absolute;
+        inset-inline: 16px;
+        bottom: 16px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.76);
+        color: #0f172a;
+      }
+      .poster-label p {
+        margin: 0;
+      }
+      .poster-label .small {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: #475569;
+      }
+      .content {
+        padding: 16px;
+      }
+      .content h3 {
+        margin: 0;
+        font-size: 18px;
+      }
+      .meta {
+        margin-top: 8px;
+        color: #94a3b8;
+        font-size: 13px;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+      .tag {
+        border: 1px solid rgba(241, 89, 31, 0.4);
+        background: rgba(241, 89, 31, 0.14);
+        color: #fde7dc;
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-size: 12px;
+      }
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div class="panel qr-card">
+          <p class="eyebrow">Single Menu QR</p>
+          <h1>Scan once. Browse the full pizza menu in AR.</h1>
+          <p class="lede">
+            This QR no longer points to one pizza. It opens the full Signature Pizza Menu in the
+            app, where each poster card can launch its 3D pizza model.
+          </p>
+          <div class="qr-frame">
+            <img id="menu-qr" alt="Signature Pizza Menu QR" />
+          </div>
+          <div class="payload" id="payload"></div>
+        </div>
+
+        <div class="panel">
+          <div class="stats">
+            <div class="stat">
+              <p class="eyebrow">Pizzas</p>
+              <strong id="pizza-count">0</strong>
+            </div>
+            <div class="stat">
+              <p class="eyebrow">Sizes</p>
+              <strong>Small to Large</strong>
+            </div>
+            <div class="stat">
+              <p class="eyebrow">Flow</p>
+              <strong>Menu QR to 3D</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <input id="search" placeholder="Search the menu preview by pizza or topping" />
+      </div>
+
+      <section class="grid" id="grid"></section>
+    </div>
+
+    <script>
+      const menuPayload = { type: 'menu', menuId: 'default-menu', version: 1 };
+      const pizzas = [
+        { name: 'Pepperoni Supreme', size: 'large', crust: 'cheese burst', toppings: ['pepperoni', 'olives', 'mushroom'], price: 399 },
+        { name: 'Truffle Mushroom', size: 'medium', crust: 'thin', toppings: ['mushroom', 'onion', 'basil'], price: 349 },
+        { name: 'Green Garden', size: 'small', crust: 'classic', toppings: ['jalapeno', 'onion', 'olives', 'basil'], price: 299 },
+        { name: 'Smoky BBQ', size: 'large', crust: 'stuffed', toppings: ['pepperoni', 'onion'], price: 429 },
+        { name: 'Farmhouse Delight', size: 'medium', crust: 'cheese burst', toppings: ['onion', 'capsicum', 'tomato', 'mushroom'], price: 369 },
+        { name: 'Classic Margherita', size: 'small', crust: 'thin', toppings: ['tomato', 'basil'], price: 249 },
+        { name: 'Spicy Jalapeno', size: 'medium', crust: 'classic', toppings: ['jalapeno', 'onion', 'capsicum'], price: 319 },
+        { name: 'Cheesy Corn Blast', size: 'large', crust: 'cheese burst', toppings: ['corn', 'extra cheese', 'onion'], price: 389 },
+        { name: 'Italian Herb', size: 'medium', crust: 'thin', toppings: ['basil', 'olive', 'tomato'], price: 329 },
+        { name: 'Veggie Fiesta', size: 'large', crust: 'classic', toppings: ['capsicum', 'onion', 'mushroom', 'corn'], price: 399 },
+        { name: 'Paneer Tikka', size: 'medium', crust: 'stuffed', toppings: ['paneer', 'onion', 'capsicum'], price: 379 },
+        { name: 'Peri Peri Veg', size: 'large', crust: 'thin', toppings: ['jalapeno', 'capsicum', 'peri peri sauce'], price: 409 },
+        { name: 'Mexican Wave', size: 'medium', crust: 'classic', toppings: ['jalapeno', 'onion', 'corn', 'tomato'], price: 349 },
+        { name: 'Double Cheese', size: 'small', crust: 'cheese burst', toppings: ['extra cheese'], price: 279 },
+        { name: 'Garlic Mushroom', size: 'medium', crust: 'thin', toppings: ['mushroom', 'garlic', 'basil'], price: 339 },
+        { name: 'BBQ Chicken', size: 'large', crust: 'stuffed', toppings: ['chicken', 'bbq sauce', 'onion'], price: 449 },
+        { name: 'Chicken Dominator', size: 'large', crust: 'cheese burst', toppings: ['chicken', 'pepperoni', 'onion'], price: 469 },
+        { name: 'Chicken Tikka', size: 'medium', crust: 'classic', toppings: ['chicken tikka', 'onion', 'capsicum'], price: 399 },
+        { name: 'Spicy Chicken', size: 'medium', crust: 'thin', toppings: ['chicken', 'jalapeno', 'onion'], price: 389 },
+        { name: 'Cheese Volcano', size: 'large', crust: 'cheese burst', toppings: ['extra cheese', 'corn'], price: 419 },
+        { name: 'Mediterranean Veg', size: 'medium', crust: 'thin', toppings: ['olive', 'tomato', 'basil', 'onion'], price: 349 },
+        { name: 'Olive Special', size: 'small', crust: 'classic', toppings: ['olive', 'cheese'], price: 269 },
+        { name: 'Capsicum Crunch', size: 'medium', crust: 'thin', toppings: ['capsicum', 'onion', 'tomato'], price: 319 },
+        { name: 'Desi Paneer Blast', size: 'large', crust: 'stuffed', toppings: ['paneer', 'onion', 'jalapeno'], price: 429 },
+        { name: 'Mushroom Mania', size: 'medium', crust: 'classic', toppings: ['mushroom', 'extra cheese'], price: 339 },
+        { name: 'Corn Delight', size: 'small', crust: 'thin', toppings: ['corn', 'cheese'], price: 259 },
+        { name: 'Tandoori Chicken', size: 'large', crust: 'cheese burst', toppings: ['tandoori chicken', 'onion'], price: 459 },
+        { name: 'Pepperoni Feast', size: 'large', crust: 'classic', toppings: ['pepperoni', 'extra cheese'], price: 439 },
+        { name: 'Veggie Lovers', size: 'medium', crust: 'thin', toppings: ['capsicum', 'onion', 'olive', 'corn'], price: 349 },
+        { name: 'Ultimate Supreme', size: 'large', crust: 'stuffed', toppings: ['pepperoni', 'chicken', 'olive', 'mushroom'], price: 499 }
+      ];
+
+      const posterThemes = [
+        'linear-gradient(135deg, #fde68a, #fb7185)',
+        'linear-gradient(135deg, #bbf7d0, #22c55e)',
+        'linear-gradient(135deg, #bfdbfe, #38bdf8)',
+        'linear-gradient(135deg, #fecdd3, #f472b6)'
+      ];
+
+      const grid = document.getElementById('grid');
+      const search = document.getElementById('search');
+      const payload = JSON.stringify(menuPayload, null, 2);
+      const encoded = encodeURIComponent(JSON.stringify(menuPayload));
+
+      document.getElementById('menu-qr').src =
+        `https://api.qrserver.com/v1/create-qr-code/?size=420x420&data=${encoded}`;
+      document.getElementById('payload').textContent = payload;
+      document.getElementById('pizza-count').textContent = String(pizzas.length);
+
+      function render(items) {
+        grid.innerHTML = '';
+        items.forEach((pizza, index) => {
+          const card = document.createElement('article');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="poster" style="background:${posterThemes[index % posterThemes.length]}">
+              <div class="pizza-base"></div>
+              <div class="pizza-sauce"></div>
+              <div class="pizza-cheese"></div>
+              <div class="poster-label">
+                <p class="small">AR menu card</p>
+                <p><strong>${pizza.name}</strong></p>
+                <p>${pizza.crust} crust</p>
+              </div>
+            </div>
+            <div class="content">
+              <h3>${pizza.name}</h3>
+              <div class="meta">${pizza.size} | Rs ${pizza.price}</div>
+              <div class="tags">
+                ${pizza.toppings.slice(0, 5).map((topping) => `<span class="tag">${topping}</span>`).join('')}
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      function filterMenu() {
+        const query = search.value.trim().toLowerCase();
+        if (!query) {
+          render(pizzas);
+          return;
+        }
+
+        render(
+          pizzas.filter((pizza) => {
+            const haystack = `${pizza.name} ${pizza.size} ${pizza.crust} ${pizza.toppings.join(' ')}`.toLowerCase();
+            return haystack.includes(query);
+          })
+        );
+      }
+
+      search.addEventListener('input', filterMenu);
+      render(pizzas);
+    </script>
+  </body>
+</html>

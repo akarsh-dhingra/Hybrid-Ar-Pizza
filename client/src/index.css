@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: radial-gradient(circle at top, rgba(255, 122, 70, 0.18), rgba(5, 6, 10, 0.95) 55%),
+    radial-gradient(circle at bottom, rgba(21, 97, 96, 0.25), rgba(5, 6, 10, 0.92) 60%);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.glass-panel {
+  background: rgba(10, 12, 18, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.scan-ring {
+  background: radial-gradient(circle, rgba(241, 89, 31, 0.25), rgba(241, 89, 31, 0.05));
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(255, 122, 70, 0.85);
+  outline-offset: 2px;
+}

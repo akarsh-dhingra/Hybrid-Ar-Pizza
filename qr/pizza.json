@@ -1,0 +1,7 @@
+{
+  "name": "Pepperoni Supreme",
+  "size": "large",
+  "crust": "cheese burst",
+  "toppings": ["pepperoni", "olives", "mushroom"],
+  "price": 399
+}
