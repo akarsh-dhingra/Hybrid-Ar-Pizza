@@ -8,15 +8,26 @@
   color-scheme: dark;
 }
 
+html {
+  min-height: 100%;
+  height: 100%;
+  background: #05070d;
+}
+
 body {
   font-family: 'Space Grotesk', sans-serif;
   background: radial-gradient(circle at top, rgba(255, 122, 70, 0.18), rgba(5, 6, 10, 0.95) 55%),
     radial-gradient(circle at bottom, rgba(21, 97, 96, 0.25), rgba(5, 6, 10, 0.92) 60%);
   min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .glass-panel {

@@ -105,7 +105,7 @@ export default function MarkerARView({
   onVideoReady,
   onCanvasReady
 }) {
-  const { videoRef, status, error } = useCameraStream({ enabled });
+  const { videoRef, status, error, startCamera } = useCameraStream({ enabled });
   const [videoSize, setVideoSize] = useState({ width: 0, height: 0 });
   const qrState = useQRScanner({ videoRef, enabled: status === 'ready' });
   const target = useAR({ corners: qrState.corners, enabled: status === 'ready' });
@@ -156,23 +156,26 @@ export default function MarkerARView({
 
   const overlayMessage = useMemo(() => {
     if (status === 'requesting') return 'Requesting camera access...';
-    if (status === 'error') return 'Camera unavailable. Check permissions.';
+    if (status === 'needs-user-action') return 'Mobile browsers sometimes need one tap before the camera can start.';
+    if (status === 'error') return 'Camera unavailable. Check permissions or try the retry button.';
     if (qrState.status === 'scanning') return 'Scanning QR code...';
     if (qrState.status === 'invalid') return 'QR detected but JSON is invalid.';
     return '';
   }, [status, qrState.status]);
 
+  const showCameraAction = status === 'needs-user-action' || status === 'error';
+
   return (
     <div className="relative h-full w-full">
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover bg-slate-950"
         muted
         autoPlay
         playsInline
       />
       <Canvas
-        className="absolute inset-0"
+        className="absolute inset-0 touch-none"
         shadows
         camera={{ fov: 50, position: [0, 0, 0], near: 0.01, far: 100 }}
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
@@ -188,8 +191,17 @@ export default function MarkerARView({
       </div>
 
       {overlayMessage ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-24 mx-auto w-fit rounded-full bg-slate-900/80 px-4 py-2 text-sm text-ember-100 shadow-glow">
-          {overlayMessage}
+        <div className="absolute inset-x-3 bottom-24 z-10 mx-auto flex w-fit max-w-[calc(100vw-1.5rem)] flex-col items-center gap-3 rounded-3xl bg-slate-950/82 px-4 py-3 text-center text-sm text-ember-100 shadow-glow sm:inset-x-0 sm:rounded-full">
+          <p className="pointer-events-none">{overlayMessage}</p>
+          {showCameraAction ? (
+            <button
+              type="button"
+              onClick={() => startCamera(true)}
+              className="pointer-events-auto rounded-full bg-ember-500 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-ember-400"
+            >
+              {status === 'error' ? 'Retry Camera' : 'Start Camera'}
+            </button>
+          ) : null}
         </div>
       ) : null}
     </div>

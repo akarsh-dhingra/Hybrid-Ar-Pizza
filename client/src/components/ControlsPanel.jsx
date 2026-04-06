@@ -70,7 +70,10 @@ export default function ControlsPanel({
 
   return (
     <>
-      <aside className="pointer-events-auto absolute bottom-4 left-4 z-10 w-[min(390px,92vw)] max-h-[78vh] overflow-hidden rounded-2xl shadow-xl">
+      <aside
+        className="pointer-events-auto absolute bottom-3 left-3 right-3 z-10 max-h-[42vh] overflow-hidden rounded-2xl shadow-xl sm:bottom-4 sm:left-4 sm:right-auto sm:w-[min(390px,92vw)] sm:max-h-[78vh]"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
         <div className="glass-panel flex h-full flex-col gap-4 overflow-y-auto p-4">
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -235,7 +238,10 @@ export default function ControlsPanel({
         </div>
       </aside>
 
-      <div className="pointer-events-auto absolute right-4 top-4 z-10 w-[min(460px,92vw)]">
+      <div
+        className="pointer-events-auto absolute left-3 right-3 top-14 z-10 sm:left-auto sm:right-4 sm:top-4 sm:w-[min(460px,92vw)]"
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      >
         <div className="flex items-center justify-between gap-3">
           <span className="rounded-full bg-ember-500/20 px-3 py-1 text-xs text-ember-200">
             {mode === 'marker' ? 'Marker Mode' : 'Markerless'}

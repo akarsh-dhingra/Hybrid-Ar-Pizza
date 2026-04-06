@@ -161,7 +161,7 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
   return (
     <div className="relative h-full w-full">
       <Canvas
-        className="absolute inset-0"
+        className="absolute inset-0 touch-none"
         shadows
         camera={{ fov: 55, position: [0, 1.4, 2.4], near: 0.01, far: 50 }}
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
@@ -173,7 +173,10 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
             <directionalLight position={[2, 4, 2]} intensity={1.2} />
             <XRPlacement pizza={pizza} userControls={userControls} />
             <Html fullscreen zIndexRange={[10, 20]}>
-              <div className="pointer-events-auto absolute left-4 top-4">
+              <div
+                className="pointer-events-auto absolute left-3 top-3 sm:left-4 sm:top-4"
+                style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+              >
                 {pizza ? (
                   <ARButton
                     className="rounded-full bg-ember-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-glow"
@@ -193,7 +196,10 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
       </Canvas>
 
       {!xrSupported ? (
-        <div className="pointer-events-none absolute inset-x-0 bottom-24 mx-auto w-fit rounded-full bg-slate-900/80 px-4 py-2 text-sm text-ember-100 shadow-glow">
+        <div
+          className="pointer-events-none absolute inset-x-3 bottom-24 mx-auto w-fit max-w-[calc(100vw-1.5rem)] rounded-3xl bg-slate-900/80 px-4 py-2 text-center text-sm text-ember-100 shadow-glow sm:inset-x-0 sm:rounded-full"
+          style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        >
           {pizza ? 'WebXR not supported. Showing interactive 3D preview.' : 'Open the scanned menu and choose a pizza to start the 3D preview.'}
         </div>
       ) : null}

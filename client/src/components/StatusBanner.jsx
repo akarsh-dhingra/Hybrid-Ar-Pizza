@@ -1,6 +1,7 @@
 const statusColor = {
   idle: 'bg-slate-800 text-slate-200',
   requesting: 'bg-ember-500/30 text-ember-200',
+  'needs-user-action': 'bg-amber-500/30 text-amber-100',
   ready: 'bg-emerald-500/20 text-emerald-200',
   error: 'bg-red-500/30 text-red-200',
   scanning: 'bg-slate-800 text-slate-200',

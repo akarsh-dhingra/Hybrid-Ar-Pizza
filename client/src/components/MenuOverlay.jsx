@@ -125,7 +125,13 @@ export default function MenuOverlay({ menu, open, selectedPizza, onClose, onSele
   }
 
   return (
-    <div className="pointer-events-auto absolute inset-0 z-20 bg-[radial-gradient(circle_at_top,rgba(255,122,70,0.16),transparent_38%),rgba(2,6,16,0.7)] backdrop-blur-md">
+    <div
+      className="pointer-events-auto absolute inset-0 z-20 bg-[radial-gradient(circle_at_top,rgba(255,122,70,0.16),transparent_38%),rgba(2,6,16,0.7)] backdrop-blur-md"
+      style={{
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+      }}
+    >
       <div className="flex h-full flex-col px-4 py-4 sm:px-6">
         <div className="glass-panel mx-auto flex w-full max-w-7xl items-start justify-between gap-4 rounded-[1.75rem] p-4">
           <div>

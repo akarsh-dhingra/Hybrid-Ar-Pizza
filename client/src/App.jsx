@@ -277,8 +277,8 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen w-full text-slate-100">
-      <div className="relative h-screen w-full overflow-hidden">
+    <div className="min-h-[100dvh] w-full text-slate-100">
+      <div className="relative h-[100dvh] w-full overflow-hidden">
         {mode === 'marker' ? (
           <MarkerARView
             enabled={mode === 'marker'}
@@ -302,12 +302,18 @@ export default function App() {
           />
         )}
 
-        <div className="pointer-events-none absolute left-4 right-4 top-4 z-10">
+        <div
+          className="pointer-events-none absolute left-3 right-3 top-3 z-10 sm:left-4 sm:right-4 sm:top-4"
+          style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+        >
           <StatusBanner status={status} />
         </div>
 
         {currentMenu && !menuOverlayOpen ? (
-          <div className="pointer-events-none absolute right-4 top-16 z-10">
+          <div
+            className="pointer-events-none absolute right-3 top-16 z-10 sm:right-4 sm:top-16"
+            style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+          >
             <button
               type="button"
               onClick={handleOpenMenu}
