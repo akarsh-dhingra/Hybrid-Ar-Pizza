@@ -132,7 +132,7 @@ function PizzaPreview({ pizza, userControls, enableControls = true }) {
   );
 }
 
-function XRSessionPreview({ pizza, userControls }) {
+function MarkerlessPreviewScene({ pizza, userControls }) {
   const { gl } = useThree();
   const [isPresenting, setIsPresenting] = useState(() => gl.xr.isPresenting);
   const isPresentingRef = useRef(gl.xr.isPresenting);
@@ -195,9 +195,9 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
         onCreated={(state) => onCanvasReady?.(state.gl.domElement)}
       >
         <SceneLights />
+        <MarkerlessPreviewScene pizza={pizza} userControls={userControls} />
         {xrSupported ? (
           <XR>
-            <XRSessionPreview pizza={pizza} userControls={userControls} />
             <XRPlacement pizza={pizza} userControls={userControls} />
             <Html fullscreen zIndexRange={[10, 20]}>
               <div
@@ -222,9 +222,7 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
               </div>
             </Html>
           </XR>
-        ) : (
-          <PizzaPreview pizza={pizza} userControls={userControls} enableControls />
-        )}
+        ) : null}
       </Canvas>
 
       {!xrSupported ? (
