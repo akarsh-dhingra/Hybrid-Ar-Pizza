@@ -104,11 +104,18 @@ function XRPlacement({ pizza, userControls }) {
   );
 }
 
-function FallbackScene({ pizza, userControls }) {
+function SceneLights() {
   return (
     <>
       <ambientLight intensity={0.6} />
       <directionalLight position={[3, 4, 2]} intensity={1.1} castShadow />
+    </>
+  );
+}
+
+function PizzaPreview({ pizza, userControls, enableControls = true }) {
+  return (
+    <>
       <group
         position={[userControls.offsetX, 0, userControls.offsetY]}
         rotation={[0, THREE.MathUtils.degToRad(userControls.rotation), 0]}
@@ -120,9 +127,29 @@ function FallbackScene({ pizza, userControls }) {
         <planeGeometry args={[6, 6]} />
         <shadowMaterial transparent opacity={0.25} />
       </mesh>
-      <OrbitControls enablePan enableRotate enableZoom />
+      {enableControls ? <OrbitControls enablePan enableRotate enableZoom /> : null}
     </>
   );
+}
+
+function XRSessionPreview({ pizza, userControls }) {
+  const { gl } = useThree();
+  const [isPresenting, setIsPresenting] = useState(() => gl.xr.isPresenting);
+  const isPresentingRef = useRef(gl.xr.isPresenting);
+
+  useFrame(() => {
+    const nextValue = gl.xr.isPresenting;
+    if (nextValue !== isPresentingRef.current) {
+      isPresentingRef.current = nextValue;
+      setIsPresenting(nextValue);
+    }
+  });
+
+  if (isPresenting) {
+    return null;
+  }
+
+  return <PizzaPreview pizza={pizza} userControls={userControls} enableControls />;
 }
 
 export default function MarkerlessARView({ enabled, pizza, userControls, onCanvasReady, onXrSupport }) {
@@ -167,21 +194,26 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
         onCreated={(state) => onCanvasReady?.(state.gl.domElement)}
       >
+        <SceneLights />
         {xrSupported ? (
           <XR>
-            <ambientLight intensity={0.7} />
-            <directionalLight position={[2, 4, 2]} intensity={1.2} />
+            <XRSessionPreview pizza={pizza} userControls={userControls} />
             <XRPlacement pizza={pizza} userControls={userControls} />
             <Html fullscreen zIndexRange={[10, 20]}>
               <div
-                className="pointer-events-auto absolute left-3 top-3 sm:left-4 sm:top-4"
+                className="pointer-events-auto absolute left-3 top-3 flex max-w-[min(92vw,22rem)] flex-col gap-2 sm:left-4 sm:top-4"
                 style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
               >
                 {pizza ? (
-                  <ARButton
-                    className="rounded-full bg-ember-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-glow"
-                    sessionInit={{ requiredFeatures: ['hit-test'] }}
-                  />
+                  <>
+                    <ARButton
+                      className="rounded-full bg-ember-500 px-4 py-2 text-sm font-semibold text-slate-950 shadow-glow"
+                      sessionInit={{ requiredFeatures: ['hit-test'] }}
+                    />
+                    <div className="rounded-2xl bg-slate-950/82 px-4 py-3 text-xs text-slate-100 shadow-glow">
+                      3D preview is live now. Tap Enter AR to place the pizza in your space.
+                    </div>
+                  </>
                 ) : (
                   <div className="rounded-full bg-slate-900/85 px-4 py-2 text-sm text-slate-100 shadow-glow">
                     Pick a pizza from the menu first
@@ -191,7 +223,7 @@ export default function MarkerlessARView({ enabled, pizza, userControls, onCanva
             </Html>
           </XR>
         ) : (
-          <FallbackScene pizza={pizza} userControls={userControls} />
+          <PizzaPreview pizza={pizza} userControls={userControls} enableControls />
         )}
       </Canvas>
 
